@@ -1,9 +1,0 @@
-D:\Josiah\IRC Project\ClientApplication\ClientApplication\Project1\bin\Debug\Project1.exe.config
-D:\Josiah\IRC Project\ClientApplication\ClientApplication\Project1\bin\Debug\Project1.exe
-D:\Josiah\IRC Project\ClientApplication\ClientApplication\Project1\bin\Debug\Project1.pdb
-D:\Josiah\IRC Project\ClientApplication\ClientApplication\Project1\bin\Debug\NetworkCommsDotNetComplete.dll
-D:\Josiah\IRC Project\ClientApplication\ClientApplication\Project1\bin\Debug\NetworkCommsDotNetComplete.pdb
-D:\Josiah\IRC Project\ClientApplication\ClientApplication\Project1\bin\Debug\NetworkCommsDotNetComplete.xml
-D:\Josiah\IRC Project\ClientApplication\ClientApplication\Project1\obj\Debug\ServerApplicationExample.csprojResolveAssemblyReference.cache
-D:\Josiah\IRC Project\ClientApplication\ClientApplication\Project1\obj\Debug\Project1.exe
-D:\Josiah\IRC Project\ClientApplication\ClientApplication\Project1\obj\Debug\Project1.pdb
