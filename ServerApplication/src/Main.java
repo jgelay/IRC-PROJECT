@@ -14,9 +14,6 @@ public class Main {
 		int PORT = 0;
 		Server server = new Server(PORT, 1);
 		server.relay_message();
-			
-			
-		
 		
 	}
 	

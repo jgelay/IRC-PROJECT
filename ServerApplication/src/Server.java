@@ -1,6 +1,7 @@
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.io.*;
+import java.util.*;
 
 public class Server {
 	ServerSocket serverSocket = null;
@@ -8,6 +9,9 @@ public class Server {
 	String serverPass = "TESTING"; 
 	
 	String ERR_PASSWDMISMATCH = "464";
+	String ERR_NONICKNAMEGIVEN = "431";
+	
+	ArrayList<String> nickNamesList = new ArrayList<String>();
 	
 	public Server(int port, int numOfClients) {
 		try 
@@ -60,39 +64,57 @@ public class Server {
 	}
 	
 	public void client_registration(BufferedReader br, OutputStreamWriter wr, String serverPass) {
-		ask_password(br,wr,serverPass);
-	}
-	
-	public void ask_password(BufferedReader br, OutputStreamWriter wr, String serverPass) {
-		String[] password = null;
+		String[] messageArray = null;
 		String resp;
-		
-		System.out.println("Asking for Password Now");
+		boolean passwordMatched = false;
+		boolean nickNameSet = false;
 		try {
+			do {
+				resp = br.readLine();
+				messageArray = resp.split(" ");
+				
+				if (messageArray[0].equals("PASS")) {
+	            	if (messageArray[1].equals(serverPass)) {
+	            		passwordMatched = true;
+	            		wr.write(":" + "example.server " + "NICK" + "\n");
+	            		wr.flush();
+	            	} else if (messageArray.length < 2) {
+	            		
+					} else {
+	            		wr.write(":" + "example.server " + ERR_PASSWDMISMATCH + "\n");
+	            		wr.flush();
+	            	}
+	            } else {
+	            	throw new IOException();
+	            }
+			} while (passwordMatched == true);
 			
-			
-			resp = br.readLine();
-			password = resp.split(" ");
-			
-			if (password[0].equals("PASS")) {
-            	if (password[1].equals(serverPass)) {
-            		System.out.println(":" + "example.server " + "NICK" + "\n");
-            	} else {
-            		wr.write(":" + "example.server " + ERR_PASSWDMISMATCH + "\n");
-            		wr.flush();
-            	}
-            } else {
-            	throw new IOException();
-            }
-			
+			do {
+				resp = br.readLine();
+				messageArray = resp.split(" ");
+				
+				if (messageArray[0].equals("NICK")) {
+	            	if (nickNamesList.contains(messageArray[1]) || nickNamesList.isEmpty()) {
+	            		nickNameSet = true;
+	            		wr.write(":" + "example.server " + "NICK" + "\n");
+	            		wr.flush();
+	            	} else if (messageArray.length < 2) {
+	            		
+					} else {
+	            		wr.write(":" + "example.server " + ERR_PASSWDMISMATCH + "\n");
+	            		wr.flush();
+	            	}
+	            } else {
+	            	throw new IOException();
+	            }
+			} while (nickNameSet == true);
 				
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public void set_nickName(BufferedReader br, OutputStreamWriter wr, String serverPass) {
 		
+		return;
 	}
+
 }

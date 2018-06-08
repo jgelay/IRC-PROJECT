@@ -21,47 +21,54 @@ namespace ClientApplication
 
         public void ClientRegistration(NetworkStream stream)
         {
-            passwordRegistration(stream);
+            string[] reply = null;
 
+            //password registration
+            do
+            {
+                reply = parsedMessage(stream, "PASS");
+            } while (!reply[1].Equals("NICK\n"));
+
+            do
+            {
+                reply = parsedMessage(stream, "NICK");
+            } while (!reply[1].Equals("USER\n"));
+           
+
+            return;
         }
-        public void passwordRegistration(NetworkStream stream)
+        public string[] parsedMessage(NetworkStream stream, string command)
         {
             int bytesRead;
-            string password;
-            string command;
-            Console.WriteLine("PASS: ");
-            password = "PASS " + Console.ReadLine();
+            string input;
+            string[] messageArray;
+            byte[] result;
 
-            int byteCount = Encoding.ASCII.GetByteCount(password + 1);
+            Console.WriteLine(command + ": ");
+            input = command + " " + Console.ReadLine();
+
+            int byteCount = Encoding.ASCII.GetByteCount(input + 1);
             byte[] sendData = new byte[byteCount];
             byte[] respData = new byte[1];
 
-            sendData = Encoding.ASCII.GetBytes(password + "\n");
+            sendData = Encoding.ASCII.GetBytes(input + "\n");
 
             stream.Write(sendData, 0, sendData.Length);
 
             using (var memstream = new MemoryStream())
             {
-                while (!Encoding.ASCII.GetString(respData).Equals("\n"))
+                while (!(Encoding.ASCII.GetChars(respData)[0] == '\n'))
                 {
                     bytesRead = stream.Read(respData, 0, respData.Length);
                     memstream.Write(respData, 0, bytesRead);
                 }
-                byte[] result = memstream.GetBuffer();
-                command = parseMessage(Encoding.ASCII.GetString(result));
+                result = memstream.GetBuffer();
+                messageArray = Encoding.ASCII.GetString(result, 0, Convert.ToInt32(memstream.Length)).Split(' ');
             }
+            
+            return messageArray;
         }
 
-        public void nickNameRegistration(NetworkStream stream)
-        {
-
-        }
-        public string parseMessage(string message)
-        {
-            string[] messageArray = message.Split(' ');
-
-            return null;
-        }
         public TcpClient getClient()
         {
             return this.client;

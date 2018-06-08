@@ -15,7 +15,7 @@ namespace ClientApplication
 
             using (NetworkStream stream = client.getClient().GetStream())
             {
-                client.passwordRegistration(stream);
+                client.ClientRegistration(stream);
             }
         }
     }
