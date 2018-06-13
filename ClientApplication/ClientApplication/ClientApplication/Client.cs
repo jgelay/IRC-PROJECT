@@ -13,8 +13,8 @@ namespace ClientApplication
         TcpClient client;
         public Client()
         {
-            string SERVERIP = "192.168.1.69";
-            int PORT = 11004;
+            string SERVERIP = "";
+            int PORT = 0;
 
             this.client = new TcpClient(SERVERIP, PORT);
         }
