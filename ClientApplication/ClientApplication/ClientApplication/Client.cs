@@ -13,8 +13,8 @@ namespace ClientApplication
         TcpClient client;
         public Client()
         {
-            string SERVERIP = "";
-            int PORT = 0;
+            string SERVERIP = "192.168.1.69";
+            int PORT = 11004;
 
             this.client = new TcpClient(SERVERIP, PORT);
         }
@@ -33,8 +33,13 @@ namespace ClientApplication
             {
                 reply = parsedMessage(stream, "NICK");
             } while (!reply[1].Equals("USER\n"));
-           
 
+            do
+            {
+                reply = parsedMessage(stream, "USER");
+            } while (!reply[1].Equals("001\n"));
+
+            Console.WriteLine("You are now registered");
             return;
         }
         public string[] parsedMessage(NetworkStream stream, string command)

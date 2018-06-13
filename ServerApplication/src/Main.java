@@ -11,9 +11,9 @@ import java.nio.charset.StandardCharsets;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		int PORT = 0;
+		int PORT = 11004;
 		Server server = new Server(PORT, 1);
-		server.relay_message();
+		server.accept_clients();
 		
 	}
 	
