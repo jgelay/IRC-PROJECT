@@ -1,0 +1,9 @@
+D:\Josiah\IRC Project\ClientApplication\ClientApplication\ClientApplication\bin\Debug\ClientApplication.exe.config
+D:\Josiah\IRC Project\ClientApplication\ClientApplication\ClientApplication\bin\Debug\ClientApplication.exe
+D:\Josiah\IRC Project\ClientApplication\ClientApplication\ClientApplication\bin\Debug\ClientApplication.pdb
+D:\Josiah\IRC Project\ClientApplication\ClientApplication\ClientApplication\bin\Debug\NetworkCommsDotNetComplete.dll
+D:\Josiah\IRC Project\ClientApplication\ClientApplication\ClientApplication\bin\Debug\NetworkCommsDotNetComplete.pdb
+D:\Josiah\IRC Project\ClientApplication\ClientApplication\ClientApplication\bin\Debug\NetworkCommsDotNetComplete.xml
+D:\Josiah\IRC Project\ClientApplication\ClientApplication\ClientApplication\obj\Debug\ClientApplication.csprojResolveAssemblyReference.cache
+D:\Josiah\IRC Project\ClientApplication\ClientApplication\ClientApplication\obj\Debug\ClientApplication.exe
+D:\Josiah\IRC Project\ClientApplication\ClientApplication\ClientApplication\obj\Debug\ClientApplication.pdb
