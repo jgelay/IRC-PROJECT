@@ -47,12 +47,12 @@ public class ClientHandler implements Runnable {
 	        		System.out.println(r);
 	        		if (messageArray[1].equals("PRIVMSG")) {
 	        			for (ClientHandler client : currChannel.getMemberList()) {
-							if (!messageArray[0].equals(client.getNickName())){
+							//if (!messageArray[0].equals(client.getNickName())){
 								System.out.println("Sending message to recepient " + client.getNickName());
 								System.out.println("Message is: " + messageArray[2]);
 								client.getOutPutStreamWriter().write(messageArray[2] + '\n');
 								client.getOutPutStreamWriter().flush();
-							}
+							//}
 						}
 	        		}
 					

@@ -40,8 +40,7 @@ public class Server {
 			}
 			Thread t = new Thread(new ClientHandler(clientSocket, cm));
 			t.start();
-			
-		}
-		
+		}	
 	}
+	
 }

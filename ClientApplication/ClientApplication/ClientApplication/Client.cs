@@ -15,10 +15,30 @@ namespace ClientApplication
 
         public Client()
         {
-            string SERVERIP = "";
-            int PORT = 0;
+            string SERVERIP;
+            int PORT;
 
-            this.client = new TcpClient(SERVERIP, PORT);
+            while(true)
+            {
+                try
+                {
+                    Console.Write("SERVER IP: ");
+                    SERVERIP = Console.ReadLine();
+
+                    Console.Write("PORT: ");
+                    PORT = int.Parse(Console.ReadLine());
+                    
+                    this.client = new TcpClient(SERVERIP, PORT);
+                    break;
+                }
+                
+                catch (SocketException e)
+                {
+                    Console.WriteLine("SocketExcept: {0}", e);
+                    Console.WriteLine("Please try again");
+                }
+            }
+            
         }
 
         public void ClientRegistration(NetworkStream stream)
@@ -76,7 +96,7 @@ namespace ClientApplication
                 while (!(Encoding.ASCII.GetChars(respData)[0] == '\n'))
                 {
                     bytesRead = stream.Read(respData, 0, respData.Length);
-                    memstream.Write(respData, 0, bytesRead);
+                    memstream.Write(respData, 0, bytesRead); 
                 }
                 result = memstream.GetBuffer();
                 messageArray = Encoding.ASCII.GetString(result, 0, Convert.ToInt32(memstream.Length)).Split(' ');
@@ -87,6 +107,7 @@ namespace ClientApplication
 
         private async void sender(NetworkStream stream)
         {
+            
             Task<string> consoleInput = ReadConsoleAsync();
 
             string input = nickName + " " + await consoleInput;
@@ -99,16 +120,28 @@ namespace ClientApplication
 
             await stream.WriteAsync(sendData, 0, sendData.Length);
 
+            Console.WriteLine("Successfully sent message");
             return;
           
         }
 
         private void receiver (NetworkStream stream)
         {
+            byte[] respData = new byte[1024];
+            int bytesRead = 0;
+            StringBuilder message = new StringBuilder();
 
-            String recMsg = parsedReceivedMessage(stream);
+            if (stream.CanRead)
+            {
+                do
+                {
+                    bytesRead = stream.Read(respData, 0, respData.Length);
+                    message.AppendFormat("{0}", Encoding.ASCII.GetString(respData, 0, bytesRead));
 
-            Console.WriteLine(recMsg);
+                } while (stream.DataAvailable);
+
+                Console.Write(message);
+            }      
         
             return;
         }
@@ -116,35 +149,11 @@ namespace ClientApplication
         {
             while (true)
             {
-              
                 sender(stream);
-                receiver(stream);
+                receiver(stream);    
             }
         }
        
-        private string parsedReceivedMessage(NetworkStream stream)
-        {
-            byte[] respData = new byte[1];
-            byte[] result;
-            int bytesRead;
-            string recMsg;
-
-
-            using (var memstream = new MemoryStream())
-            {
-                while (!(Encoding.ASCII.GetChars(respData)[0] == '\n'))
-                {
-                    bytesRead = stream.Read(respData, 0, respData.Length);
-                    memstream.Write(respData, 0, bytesRead);
-                }
-
-                result = memstream.GetBuffer();
-                recMsg = Encoding.ASCII.GetString(result, 0, Convert.ToInt32(memstream.Length));
-            }
-
-            return recMsg;
-        }
-
         public static Task<string> ReadConsoleAsync()
         {
             return Task.Run(() => Console.ReadLine());
